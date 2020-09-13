@@ -5,8 +5,10 @@ public class ApplyInputToBrowser : MonoBehaviour
 {
     public OculusInputBridge oInput;
 
+    private Grid gridL;
     private Explorer explorerL;
     private FSItem itemL;
+    private Grid gridR;
     private Explorer explorerR;
     private FSItem itemR;
 
@@ -44,6 +46,29 @@ public class ApplyInputToBrowser : MonoBehaviour
                 itemR.data.refExp.Goto(itemR.data.fullPath);
             }
         }
+
+        if (oInput.joystickL_NH_Down || oInput.joystickL_PH_Down)
+        {
+            Debug.Log("Next/Prev page " + (gridL != null));
+            if (gridL != null)
+            {
+                if (oInput.joystickL.x > 0)
+                    gridL.NextPage();
+                else
+                    gridL.PrevPage();
+            }
+        }
+        if (oInput.joystickR_NH_Down || oInput.joystickR_PH_Down)
+        {
+            Debug.Log("Next/Prev page " + (gridR != null));
+            if (gridR != null)
+            {
+                if (oInput.joystickR.x > 0)
+                    gridR.NextPage();
+                else
+                    gridR.PrevPage();
+            }
+        }
     }
 
     public void CheckPointers()
@@ -51,6 +76,7 @@ public class ApplyInputToBrowser : MonoBehaviour
         RaycastHit rayHit;
         if (Physics.Raycast(oInput.leftRay.position, oInput.leftRay.forward, out rayHit))
         {
+            gridL = rayHit.transform.GetComponentInParent<Grid>();
             explorerL = rayHit.transform.GetComponentInParent<Explorer>();
             itemL = rayHit.transform.GetComponentInParent<FSItem>();
             if (itemL != null && explorerL == null)
@@ -60,12 +86,14 @@ public class ApplyInputToBrowser : MonoBehaviour
         }
         else
         {
+            gridL = null;
             explorerL = null;
             itemL = null;
         }
         
         if (Physics.Raycast(oInput.rightRay.position, oInput.rightRay.forward, out rayHit))
         {
+            gridR = rayHit.transform.GetComponentInParent<Grid>();
             explorerR = rayHit.transform.GetComponentInParent<Explorer>();
             itemR = rayHit.transform.GetComponentInParent<FSItem>();
             if (itemR != null && explorerR == null)
@@ -75,6 +103,7 @@ public class ApplyInputToBrowser : MonoBehaviour
         }
         else
         {
+            gridR = null;
             explorerR = null;
             itemR = null;
         }

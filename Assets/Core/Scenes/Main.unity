@@ -637,6 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftRay: {fileID: 1095553177}
   rightRay: {fileID: 17470415}
+  joystickThreshold: 0.01
   gripThreshold: 0.01
   triggerThreshold: 0.01
 --- !u!4 &143758105
@@ -716,7 +717,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSize: 0.2
   padding: 0.1
-  gridSize: 3
+  gridSizeX: 3
+  gridSizeY: 3
 --- !u!114 &306418102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072561777b051674e960ecc5256fa8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  other: {fileID: 1495880524}
+  other: {fileID: 833209771}
   physicsBased: 0
   mimicLocalPosition: 0
   mimicX: 1
@@ -899,12 +901,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7057360187844374386}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7057360187844374387}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d6f9876a07394a4691381236c4bada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &833209771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7057360188205230877, guid: bf1535e2d5b2428cd91887770f772eaa,
+    type: 3}
+  m_PrefabInstance: {fileID: 7057360187844374386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1095553176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,10 +1311,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2055497336}
     m_Modifications:
-    - target: {fileID: 690195409, guid: bf1535e2d5b2428cd91887770f772eaa, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7057360189067623480, guid: bf1535e2d5b2428cd91887770f772eaa,
         type: 3}
       propertyPath: m_Name
@@ -1367,45 +1371,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 690195407, guid: bf1535e2d5b2428cd91887770f772eaa, type: 3}
-    - {fileID: 690195410, guid: bf1535e2d5b2428cd91887770f772eaa, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1535e2d5b2428cd91887770f772eaa, type: 3}
---- !u!1 &7057360187844374387 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7057360189067623480, guid: bf1535e2d5b2428cd91887770f772eaa,
-    type: 3}
-  m_PrefabInstance: {fileID: 7057360187844374386}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7057360187844374388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7057360187844374387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d60f22ad72c7fd940b3d24b12215deed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSqueezeStretchDelta: 0.01
-  OnFirstGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGrabbed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnUngrabbed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCompletelyUngrabbed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStretch:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSqueeze:
-    m_PersistentCalls:
-      m_Calls: []
-  physicsBased: 0

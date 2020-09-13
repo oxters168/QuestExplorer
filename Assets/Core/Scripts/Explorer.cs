@@ -11,6 +11,7 @@ public class Explorer : MonoBehaviour
     public event ContentsChangedCallback onDirectoriesChanged;
     public event ContentsChangedCallback onFilesChanged;
     public event ContentsChangedCallback onLogicalDrivesChanged;
+    public event ContentsChangedCallback onSomethingChanged;
 
     private List<string> pathHistory = new List<string>();
     public string currentPath;
@@ -78,7 +79,7 @@ public class Explorer : MonoBehaviour
     {
         lastRefresh = Time.time;
 
-        SetLogicalDrives(Directory.GetLogicalDrives());
+        bool logicalDrivesChanged = SetLogicalDrives(GrabPathsSafely((unnecessary) => { return Directory.GetLogicalDrives(); }, null));
         
         if (string.IsNullOrEmpty(currentPath) || !Directory.Exists(currentPath))
             GoBack();
@@ -86,36 +87,55 @@ public class Explorer : MonoBehaviour
             pathHistory.Add(currentPath);
         
         //These are kept outside the second if in case there have been changes in the directory
-        SetDirectories(Directory.GetDirectories(currentPath));
-        SetFiles(Directory.GetFiles(currentPath));
+        bool directoriesChanged = SetDirectories(GrabPathsSafely(Directory.GetDirectories, currentPath));
+        bool filesChanged = SetFiles(GrabPathsSafely(Directory.GetFiles, currentPath));
+
+        if (logicalDrivesChanged || directoriesChanged || filesChanged)
+            onSomethingChanged?.Invoke(this);
+    }
+    private static string[] GrabPathsSafely(Func<string, string[]> pathGetter, string path)
+    {
+        string[] grabbedPaths = new string[0];
+        try
+        {
+            grabbedPaths = pathGetter(path);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Caught exception: " + e);
+        }
+        return grabbedPaths;
     }
 
-    private void SetLogicalDrives(string[] newLogicalDrives)
+    private bool SetLogicalDrives(string[] newLogicalDrives)
     {
         bool foundChange = ComparePaths(logicalDrives, newLogicalDrives);
         if (foundChange)
         {
-            onLogicalDrivesChanged?.Invoke(this);
             logicalDrives = newLogicalDrives;
+            onLogicalDrivesChanged?.Invoke(this);
         }
+        return foundChange;
     }
-    private void SetDirectories(string[] newDirectories)
+    private bool SetDirectories(string[] newDirectories)
     {
         bool foundChange = ComparePaths(directories, newDirectories);
         if (foundChange)
         {
-            onDirectoriesChanged?.Invoke(this);
             directories = newDirectories;
+            onDirectoriesChanged?.Invoke(this);
         }
+        return foundChange;
     }
-    private void SetFiles(string[] newFiles)
+    private bool SetFiles(string[] newFiles)
     {
         bool foundChange = ComparePaths(files, newFiles);
         if (foundChange)
         {
-            onFilesChanged?.Invoke(this);
             files = newFiles;
+            onFilesChanged?.Invoke(this);
         }
+        return foundChange;
     }
 
     public static bool ComparePaths(string[] first, string[] second)

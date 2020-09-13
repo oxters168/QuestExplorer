@@ -8,8 +8,7 @@ public class BrowserController : MonoBehaviour
 
     void Start()
     {
-        explorer.onDirectoriesChanged += OnExplorerChanged;
-        explorer.onFilesChanged += OnExplorerChanged;
+        explorer.onSomethingChanged += OnExplorerChanged;
     }
 
     private void OnExplorerChanged(Explorer caller)
@@ -39,18 +38,18 @@ public class BrowserController : MonoBehaviour
         }
 
         var items = grid.SetData(allData);
-        for (int i = 0; i < items.Length; i++)
-        {
-            var pt = items[i].GetComponent<PhysicsTransform>();
-            if (pt != null)
-            {
-                var lp = items[i].localPosition;
-                var lr = items[i].localRotation;
-                pt.parent = items[i].parent;
-                pt.localPosition = lp;
-                pt.localRotation = lr;
-                items[i].SetParent(null);
-            }
-        }
+        // for (int i = 0; i < items.Length; i++)
+        // {
+        //     var pt = items[i].GetComponent<PhysicsTransform>();
+        //     if (pt != null)
+        //     {
+        //         var lp = items[i].localPosition;
+        //         var lr = items[i].localRotation;
+        //         pt.parent = items[i].parent;
+        //         pt.localPosition = lp;
+        //         pt.localRotation = lr;
+        //         items[i].SetParent(null);
+        //     }
+        // }
     }
 }
