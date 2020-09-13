@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityHelpers;
 
 public class BrowserController : MonoBehaviour
 {
@@ -23,20 +24,33 @@ public class BrowserController : MonoBehaviour
         FSData[] allData = new FSData[ldCount + dirsCount + filesCount];
         for (int i = 0; i < ldCount; i++)
         {
-            var currentLD = new FSData() { fullPath = ld[i], isFile = false };
+            var currentLD = new FSData(ld[i], false, explorer);
             allData[i] = currentLD;
         }
         for (int i = 0; i < dirsCount; i++)
         {
-            var currentDir = new FSData() { fullPath = dirs[i], isFile = false };
+            var currentDir = new FSData(dirs[i], false, explorer);
             allData[i + ldCount] = currentDir;
         }
         for (int i = 0; i < filesCount; i++)
         {
-            var currentFile = new FSData() { fullPath = files[i], isFile = true };
+            var currentFile = new FSData(files[i], true, explorer);
             allData[i + ldCount + dirsCount] = currentFile;
         }
 
-        grid.SetData(allData);
+        var items = grid.SetData(allData);
+        for (int i = 0; i < items.Length; i++)
+        {
+            var pt = items[i].GetComponent<PhysicsTransform>();
+            if (pt != null)
+            {
+                var lp = items[i].localPosition;
+                var lr = items[i].localRotation;
+                pt.parent = items[i].parent;
+                pt.localPosition = lp;
+                pt.localRotation = lr;
+                items[i].SetParent(null);
+            }
+        }
     }
 }

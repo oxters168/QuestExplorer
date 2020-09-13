@@ -5,6 +5,8 @@ using System;
 
 public class Explorer : MonoBehaviour
 {
+    public TMPro.TextMeshProUGUI pathLabel;
+    
     public delegate void ContentsChangedCallback(Explorer caller);
     public event ContentsChangedCallback onDirectoriesChanged;
     public event ContentsChangedCallback onFilesChanged;
@@ -22,6 +24,8 @@ public class Explorer : MonoBehaviour
     {
         if (Time.time - lastRefresh >= refreshTime)
             Refresh();
+
+        pathLabel.text = currentPath;
     }
 
     public string[] GetLogicalDrives()
