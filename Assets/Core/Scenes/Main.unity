@@ -280,58 +280,6 @@ Transform:
   m_Father: {fileID: 1196261124}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &17679511
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 17679513}
-  - component: {fileID: 17679512}
-  m_Layer: 0
-  m_Name: Pools
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &17679512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17679511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59d6b28c02aef2848b2526e0692bfc29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools:
-  - poolName: Items
-    poolPrefab: {fileID: 7780193336522915170, guid: 3297f449fd5384141a987ccfb692bbac,
-      type: 3}
-    poolSize: 5
-    reuseObjectsInUse: 0
-    dynamicSize: 1
-    poolParent: {fileID: 0}
-    worldPositionStays: 0
---- !u!4 &17679513
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17679511}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &23952397
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +472,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63570569
 GameObject:
@@ -654,7 +602,7 @@ Transform:
   - {fileID: 1926032365}
   - {fileID: 1196261124}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &143758106
 MonoBehaviour:
@@ -683,7 +631,7 @@ GameObject:
   - component: {fileID: 306418101}
   - component: {fileID: 306418102}
   m_Layer: 0
-  m_Name: Items
+  m_Name: SideItems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -697,7 +645,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306418099}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.72, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2055497336}
@@ -715,10 +663,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed8872ddcf3e3b898bc693427adf75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridItemPrefab: {fileID: 7780193336522915170, guid: 3297f449fd5384141a987ccfb692bbac,
+    type: 3}
   itemSize: 0.2
   padding: 0.1
-  gridSizeX: 3
+  gridSizeX: 1
   gridSizeY: 3
+  itemsPosY: 0
 --- !u!114 &306418102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,7 +682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072561777b051674e960ecc5256fa8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  other: {fileID: 833209771}
+  other: {fileID: 486115170}
   physicsBased: 0
   mimicLocalPosition: 0
   mimicX: 1
@@ -740,7 +691,7 @@ MonoBehaviour:
   mimicRotation: 1
   mimicLocalRotation: 0
   lookAt: {fileID: 0}
-  offset: {x: 0, y: 0.1, z: 0}
+  offset: {x: 0, y: 0, z: 0}
   rotOffset: {x: 0, y: 0, z: 0}
   lerpPosition: 0
   lerpPositionAmount: 5
@@ -838,6 +789,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &486115169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486115170}
+  m_Layer: 0
+  m_Name: SidePanelAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &486115170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486115169}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.72, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1495880524}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &567722070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -901,18 +882,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7057360187844374386}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1326658373}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d6f9876a07394a4691381236c4bada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &833209771 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7057360188205230877, guid: bf1535e2d5b2428cd91887770f772eaa,
-    type: 3}
-  m_PrefabInstance: {fileID: 7057360187844374386}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1095553176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,6 +1033,31 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 567722070}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1326658373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7057360189067623480, guid: bf1535e2d5b2428cd91887770f772eaa,
+    type: 3}
+  m_PrefabInstance: {fileID: 7057360187844374386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1326658374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326658373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed8872ddcf3e3b898bc693427adf75c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridItemPrefab: {fileID: 7780193336522915170, guid: 3297f449fd5384141a987ccfb692bbac,
+    type: 3}
+  itemSize: 0.2
+  padding: 0.1
+  gridSizeX: 3
+  gridSizeY: 3
+  itemsPosY: 0.1
 --- !u!4 &1495880524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7057360189067623486, guid: bf1535e2d5b2428cd91887770f772eaa,
@@ -1224,7 +1224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explorer: {fileID: 690195408}
-  grid: {fileID: 306418101}
+  mainGrid: {fileID: 1326658374}
+  sideGrid: {fileID: 306418101}
 --- !u!1 &2120887899
 GameObject:
   m_ObjectHideFlags: 0

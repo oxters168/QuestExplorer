@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 7780193336522915170}
   - component: {fileID: 7780193336522915173}
   - component: {fileID: 7524807692166119871}
+  - component: {fileID: 288098765128471854}
   - component: {fileID: 5104139282654629000}
   m_Layer: 0
   m_Name: Item
@@ -399,6 +400,7 @@ MonoBehaviour:
   data:
     isFile: 0
     fullPath: Item
+    refExp: {fileID: 0}
   nameLabel: {fileID: 1103680838}
   fileObject: {fileID: 7780193337112216656}
   directoryObect: {fileID: 7780193336510428807}
@@ -418,6 +420,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &288098765128471854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780193336522915171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 072561777b051674e960ecc5256fa8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  other: {fileID: 0}
+  physicsBased: 0
+  mimicLocalPosition: 0
+  mimicX: 1
+  mimicY: 1
+  mimicZ: 1
+  mimicRotation: 1
+  mimicLocalRotation: 0
+  lookAt: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  rotOffset: {x: 0, y: 0, z: 0}
+  lerpPosition: 0
+  lerpPositionAmount: 5
+  lerpRotation: 0
+  lerpRotationAmount: 5
 --- !u!114 &5104139282654629000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +462,18 @@ MonoBehaviour:
   minSqueezeStretchDelta: 0.01
   OnFirstGrab:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 288098765128471854}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnGrabbed:
     m_PersistentCalls:
       m_Calls: []
@@ -442,7 +482,18 @@ MonoBehaviour:
       m_Calls: []
   OnCompletelyUngrabbed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 288098765128471854}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnStretch:
     m_PersistentCalls:
       m_Calls: []
