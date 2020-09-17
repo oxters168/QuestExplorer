@@ -3,8 +3,8 @@ using UnityHelpers;
 
 public class ApplyInputToBrowser : MonoBehaviour
 {
-    public OculusInputBridge oInput;
-
+    public Transform leftRay, rightRay;
+    
     private Grid gridL;
     private Explorer explorerL;
     private FSItem itemL;
@@ -20,26 +20,26 @@ public class ApplyInputToBrowser : MonoBehaviour
     {
         CheckPointers();
 
-        if (oInput.aDown)
+        if (OculusInputBridge.aDown)
         {
             explorerR?.GoBack();
         }
-        if (oInput.bDown)
+        if (OculusInputBridge.bDown)
         {
             explorerR?.GoUp();
         }
 
-        grabberL.grab = oInput.gripL;
-        grabberR.grab = oInput.gripR;
+        grabberL.grab = OculusInputBridge.gripL;
+        grabberR.grab = OculusInputBridge.gripR;
 
-        if (oInput.triggerLDown)
+        if (OculusInputBridge.triggerLDown)
         {
             if (itemL != null)
             {
                 itemL.data.refExp.Goto(itemL.data.fullPath);
             }
         }
-        if (oInput.triggerRDown)
+        if (OculusInputBridge.triggerRDown)
         {
             if (itemR != null)
             {
@@ -47,23 +47,23 @@ public class ApplyInputToBrowser : MonoBehaviour
             }
         }
 
-        if (oInput.joystickL_NH_Down || oInput.joystickL_PH_Down)
+        if (OculusInputBridge.joystickL_NH_Down || OculusInputBridge.joystickL_PH_Down)
         {
             Debug.Log("Next/Prev page " + (gridL != null));
             if (gridL != null)
             {
-                if (oInput.joystickL.x > 0)
+                if (OculusInputBridge.joystickL.x > 0)
                     gridL.NextPage();
                 else
                     gridL.PrevPage();
             }
         }
-        if (oInput.joystickR_NH_Down || oInput.joystickR_PH_Down)
+        if (OculusInputBridge.joystickR_NH_Down || OculusInputBridge.joystickR_PH_Down)
         {
             Debug.Log("Next/Prev page " + (gridR != null));
             if (gridR != null)
             {
-                if (oInput.joystickR.x > 0)
+                if (OculusInputBridge.joystickR.x > 0)
                     gridR.NextPage();
                 else
                     gridR.PrevPage();
@@ -74,7 +74,7 @@ public class ApplyInputToBrowser : MonoBehaviour
     public void CheckPointers()
     {
         RaycastHit rayHit;
-        if (Physics.Raycast(oInput.leftRay.position, oInput.leftRay.forward, out rayHit))
+        if (Physics.Raycast(leftRay.position, leftRay.forward, out rayHit))
         {
             gridL = rayHit.transform.GetComponentInParent<Grid>();
             explorerL = rayHit.transform.GetComponentInParent<Explorer>();
@@ -91,7 +91,7 @@ public class ApplyInputToBrowser : MonoBehaviour
             itemL = null;
         }
         
-        if (Physics.Raycast(oInput.rightRay.position, oInput.rightRay.forward, out rayHit))
+        if (Physics.Raycast(rightRay.position, rightRay.forward, out rayHit))
         {
             gridR = rayHit.transform.GetComponentInParent<Grid>();
             explorerR = rayHit.transform.GetComponentInParent<Explorer>();

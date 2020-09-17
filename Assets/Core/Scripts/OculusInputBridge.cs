@@ -1,122 +1,139 @@
 ﻿using UnityEngine;
+using UnityHelpers;
 
 public class OculusInputBridge : MonoBehaviour
 {
-    public Transform leftRay;
-    public Transform rightRay;
+    public Transform trackingSpace;
 
+    [Space(10)]
     public float joystickThreshold = 0.01f;
     public float gripThreshold = 0.01f;
     public float triggerThreshold = 0.01f;
     
-    public Vector2 joystickL { get; private set; }
-    public Vector2 joystickR { get; private set; }
-    public float gripAxisL { get; private set; }
-    public float gripAxisR { get; private set; }
-    public float triggerAxisL { get; private set; }
-    public float triggerAxisR { get; private set; }
-    public bool a { get; private set; }
-    public bool b { get; private set; }
+    public static Vector3 ltouchPos { get; private set; }
+    public static Quaternion ltouchRot { get; private set; }
+    public static Vector3 rtouchPos { get; private set; }
+    public static Quaternion rtouchRot { get; private set; }
+    public static Vector2 joystickL { get; private set; }
+    public static Vector2 joystickR { get; private set; }
+    public static float gripAxisL { get; private set; }
+    public static float gripAxisR { get; private set; }
+    public static float triggerAxisL { get; private set; }
+    public static float triggerAxisR { get; private set; }
+    public static bool a { get; private set; }
+    public static bool b { get; private set; }
 
-    public bool joystickL_PH_Up { get { return _joystickL_PH_Up; } }
-    public bool joystickL_PH_Down { get { return _joystickL_PH_Down; } }
-    public bool joystickL_NH_Up { get { return _joystickL_NH_Up; } }
-    public bool joystickL_NH_Down { get { return _joystickL_NH_Down; } }
-    public bool joystickL_PV_Up { get { return _joystickL_PV_Up; } }
-    public bool joystickL_PV_Down { get { return _joystickL_PV_Down; } }
-    public bool joystickL_NV_Up { get { return _joystickL_NV_Up; } }
-    public bool joystickL_NV_Down { get { return _joystickL_NV_Down; } }
-    public bool joystickR_PH_Up { get { return _joystickR_PH_Up; } }
-    public bool joystickR_PH_Down { get { return _joystickR_PH_Down; } }
-    public bool joystickR_NH_Up { get { return _joystickR_NH_Up; } }
-    public bool joystickR_NH_Down { get { return _joystickR_NH_Down; } }
-    public bool joystickR_PV_Up { get { return _joystickR_PV_Up; } }
-    public bool joystickR_PV_Down { get { return _joystickR_PV_Down; } }
-    public bool joystickR_NV_Up { get { return _joystickR_NV_Up; } }
-    public bool joystickR_NV_Down { get { return _joystickR_NV_Down; } }
-    public bool joystickL_PH { get { return _joystickL_PH; } } //positive horizontal
-    public bool joystickL_NH { get { return _joystickL_NH; } } //negative horizontal
-    public bool joystickL_PV { get { return _joystickL_PV; } } //positive vertical
-    public bool joystickL_NV { get { return _joystickL_NV; } } //negative vertical
-    public bool joystickR_PH { get { return _joystickR_PH; } } //positive horizontal
-    public bool joystickR_NH { get { return _joystickR_NH; } } //negative horizontal
-    public bool joystickR_PV { get { return _joystickR_PV; } } //positive vertical
-    public bool joystickR_NV { get { return _joystickR_NV; } } //negative vertical
-    public bool gripL { get { return _gripL; } }
-    public bool gripLUp { get { return _gripLUp; } }
-    public bool gripLDown { get { return _gripLDown; } }
-    public bool gripR { get { return _gripR; } }
-    public bool gripRUp { get { return _gripRUp; } }
-    public bool gripRDown { get { return _gripRDown; } }
-    public bool triggerL { get { return _triggerL; } }
-    public bool triggerLUp { get { return _triggerLUp; } }
-    public bool triggerLDown { get { return _triggerLDown; } }
-    public bool triggerR { get { return _triggerR; } }
-    public bool triggerRUp { get { return _triggerRUp; } }
-    public bool triggerRDown { get { return _triggerRDown; } }
-    public bool aUp { get { return _aUp; } }
-    public bool aDown { get { return _aDown; } }
-    public bool bUp { get { return _bUp; } }
-    public bool bDown { get { return _bDown; } }
+    public static bool joystickL_PH_Up { get { return _joystickL_PH_Up; } }
+    public static bool joystickL_PH_Down { get { return _joystickL_PH_Down; } }
+    public static bool joystickL_NH_Up { get { return _joystickL_NH_Up; } }
+    public static bool joystickL_NH_Down { get { return _joystickL_NH_Down; } }
+    public static bool joystickL_PV_Up { get { return _joystickL_PV_Up; } }
+    public static bool joystickL_PV_Down { get { return _joystickL_PV_Down; } }
+    public static bool joystickL_NV_Up { get { return _joystickL_NV_Up; } }
+    public static bool joystickL_NV_Down { get { return _joystickL_NV_Down; } }
+    public static bool joystickR_PH_Up { get { return _joystickR_PH_Up; } }
+    public static bool joystickR_PH_Down { get { return _joystickR_PH_Down; } }
+    public static bool joystickR_NH_Up { get { return _joystickR_NH_Up; } }
+    public static bool joystickR_NH_Down { get { return _joystickR_NH_Down; } }
+    public static bool joystickR_PV_Up { get { return _joystickR_PV_Up; } }
+    public static bool joystickR_PV_Down { get { return _joystickR_PV_Down; } }
+    public static bool joystickR_NV_Up { get { return _joystickR_NV_Up; } }
+    public static bool joystickR_NV_Down { get { return _joystickR_NV_Down; } }
+    public static bool joystickL_PH { get { return _joystickL_PH; } } //positive horizontal
+    public static bool joystickL_NH { get { return _joystickL_NH; } } //negative horizontal
+    public static bool joystickL_PV { get { return _joystickL_PV; } } //positive vertical
+    public static bool joystickL_NV { get { return _joystickL_NV; } } //negative vertical
+    public static bool joystickR_PH { get { return _joystickR_PH; } } //positive horizontal
+    public static bool joystickR_NH { get { return _joystickR_NH; } } //negative horizontal
+    public static bool joystickR_PV { get { return _joystickR_PV; } } //positive vertical
+    public static bool joystickR_NV { get { return _joystickR_NV; } } //negative vertical
+    public static bool gripL { get { return _gripL; } }
+    public static bool gripLUp { get { return _gripLUp; } }
+    public static bool gripLDown { get { return _gripLDown; } }
+    public static bool gripR { get { return _gripR; } }
+    public static bool gripRUp { get { return _gripRUp; } }
+    public static bool gripRDown { get { return _gripRDown; } }
+    public static bool triggerL { get { return _triggerL; } }
+    public static bool triggerLUp { get { return _triggerLUp; } }
+    public static bool triggerLDown { get { return _triggerLDown; } }
+    public static bool triggerR { get { return _triggerR; } }
+    public static bool triggerRUp { get { return _triggerRUp; } }
+    public static bool triggerRDown { get { return _triggerRDown; } }
+    public static bool aUp { get { return _aUp; } }
+    public static bool aDown { get { return _aDown; } }
+    public static bool bUp { get { return _bUp; } }
+    public static bool bDown { get { return _bDown; } }
 
-    private bool _joystickL_PH; //positive horizontal
-    private bool _joystickL_PH_Up;
-    private bool _joystickL_PH_Down;
-    private bool _joystickL_NH; //negative horizontal
-    private bool _joystickL_NH_Up;
-    private bool _joystickL_NH_Down;
-    private bool _joystickL_PV; //positive vertical
-    private bool _joystickL_PV_Up;
-    private bool _joystickL_PV_Down;
-    private bool _joystickL_NV; //negative vertical
-    private bool _joystickL_NV_Up;
-    private bool _joystickL_NV_Down;
-    private bool _joystickR_PH; //positive horizontal
-    private bool _joystickR_PH_Up;
-    private bool _joystickR_PH_Down;
-    private bool _joystickR_NH; //negative horizontal
-    private bool _joystickR_NH_Up;
-    private bool _joystickR_NH_Down;
-    private bool _joystickR_PV; //positive vertical
-    private bool _joystickR_PV_Up;
-    private bool _joystickR_PV_Down;
-    private bool _joystickR_NV; //negative vertical
-    private bool _joystickR_NV_Up;
-    private bool _joystickR_NV_Down;
-    private bool _gripL;
-    private bool _gripLUp;
-    private bool _gripLDown;
-    private bool _gripR;
-    private bool _gripRUp;
-    private bool _gripRDown;
-    private bool _triggerL;
-    private bool _triggerLUp;
-    private bool _triggerLDown;
-    private bool _triggerR;
-    private bool _triggerRUp;
-    private bool _triggerRDown;
-    private bool _aUp;
-    private bool _aDown;
-    private bool _bUp;
-    private bool _bDown;
+    private static bool _joystickL_PH; //positive horizontal
+    private static bool _joystickL_PH_Up;
+    private static bool _joystickL_PH_Down;
+    private static bool _joystickL_NH; //negative horizontal
+    private static bool _joystickL_NH_Up;
+    private static bool _joystickL_NH_Down;
+    private static bool _joystickL_PV; //positive vertical
+    private static bool _joystickL_PV_Up;
+    private static bool _joystickL_PV_Down;
+    private static bool _joystickL_NV; //negative vertical
+    private static bool _joystickL_NV_Up;
+    private static bool _joystickL_NV_Down;
+    private static bool _joystickR_PH; //positive horizontal
+    private static bool _joystickR_PH_Up;
+    private static bool _joystickR_PH_Down;
+    private static bool _joystickR_NH; //negative horizontal
+    private static bool _joystickR_NH_Up;
+    private static bool _joystickR_NH_Down;
+    private static bool _joystickR_PV; //positive vertical
+    private static bool _joystickR_PV_Up;
+    private static bool _joystickR_PV_Down;
+    private static bool _joystickR_NV; //negative vertical
+    private static bool _joystickR_NV_Up;
+    private static bool _joystickR_NV_Down;
+    private static bool _gripL;
+    private static bool _gripLUp;
+    private static bool _gripLDown;
+    private static bool _gripR;
+    private static bool _gripRUp;
+    private static bool _gripRDown;
+    private static bool _triggerL;
+    private static bool _triggerLUp;
+    private static bool _triggerLDown;
+    private static bool _triggerR;
+    private static bool _triggerRUp;
+    private static bool _triggerRDown;
+    private static bool _aUp;
+    private static bool _aDown;
+    private static bool _bUp;
+    private static bool _bDown;
 
-    private bool prevJoystickL_PH; //positive horizontal
-    private bool prevJoystickL_NH; //negative horizontal
-    private bool prevJoystickL_PV; //positive vertical
-    private bool prevJoystickL_NV; //negative vertical
-    private bool prevJoystickR_PH; //positive horizontal
-    private bool prevJoystickR_NH; //negative horizontal
-    private bool prevJoystickR_PV; //positive vertical
-    private bool prevJoystickR_NV; //negative vertical
-    private bool prevB;
-    private bool prevA;
-    private bool prevGripL;
-    private bool prevGripR;
-    private bool prevTriggerL;
-    private bool prevTriggerR;
+    private static bool prevJoystickL_PH; //positive horizontal
+    private static bool prevJoystickL_NH; //negative horizontal
+    private static bool prevJoystickL_PV; //positive vertical
+    private static bool prevJoystickL_NV; //negative vertical
+    private static bool prevJoystickR_PH; //positive horizontal
+    private static bool prevJoystickR_NH; //negative horizontal
+    private static bool prevJoystickR_PV; //positive vertical
+    private static bool prevJoystickR_NV; //negative vertical
+    private static bool prevB;
+    private static bool prevA;
+    private static bool prevGripL;
+    private static bool prevGripR;
+    private static bool prevTriggerL;
+    private static bool prevTriggerR;
     
     void Update()
     {
+        ltouchPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+        ltouchRot = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
+        rtouchPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+        rtouchRot = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+        if (trackingSpace != null)
+        {
+            ltouchPos = trackingSpace.TransformPoint(ltouchPos);
+            ltouchRot = trackingSpace.TransformRotation(ltouchRot);
+            rtouchPos = trackingSpace.TransformPoint(rtouchPos);
+            rtouchRot = trackingSpace.TransformRotation(rtouchRot);
+        }
+
         joystickL = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick, OVRInput.Controller.All);
         joystickR = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick, OVRInput.Controller.All);
         gripAxisL = OVRInput.Get(OVRInput.RawAxis1D.LHandTrigger, OVRInput.Controller.All);
