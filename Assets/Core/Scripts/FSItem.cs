@@ -7,14 +7,20 @@ public class FSItem : MonoBehaviour, IGridItem
 
     [Space(10)]
     public TextMeshProUGUI nameLabel;
-    public GameObject fileObject;
-    public GameObject directoryObect;
+    [Tooltip("0: File\n1: Folder\n2: Logical Drive")]
+    public GameObject[] objectIcons;
+    // public GameObject fileObject;
+    // public GameObject directoryObect;
 
-    void Update()
+    private void Refresh()
     {
-        fileObject.SetActive(data.isFile);
-        directoryObect.SetActive(!data.isFile);
-        nameLabel.text = data.GetName();
+        for (int i = 0; i < objectIcons.Length; i++)
+            objectIcons[i].SetActive(i == (int)data.fileType);
+
+        if (data.fileType != FSData.FileType.LogicalDrive)
+            nameLabel.text = data.GetName();
+        else
+            nameLabel.text = data.fullPath;
     }
 
     public void SetSize(float value)
@@ -24,5 +30,6 @@ public class FSItem : MonoBehaviour, IGridItem
     public void SetData(GridItemData data)
     {
         this.data = (FSData)data;
+        Refresh();
     }
 }

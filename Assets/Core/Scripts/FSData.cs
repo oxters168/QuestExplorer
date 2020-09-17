@@ -3,14 +3,17 @@
 [System.Serializable]
 public class FSData : GridItemData
 {
-    public bool isFile;
+    public enum FileType { File, Folder, LogicalDrive, }
+    public FileType fileType;
+    // public bool isFile;
     public string fullPath = "Item";
     public Explorer refExp;
 
-    public FSData(string path, bool isFile, Explorer referenceExplorer)
+    public FSData(string path, FileType fileType, Explorer referenceExplorer)
     {
         fullPath = path;
-        this.isFile = isFile;
+        this.fileType = fileType;
+        // this.isFile = isFile;
         refExp = referenceExplorer;
     }
     public string GetName()
