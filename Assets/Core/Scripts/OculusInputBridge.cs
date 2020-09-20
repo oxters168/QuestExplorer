@@ -193,4 +193,9 @@ public class OculusInputBridge : MonoBehaviour
             up = false;
         }
     }
+
+    public static void SetControllerVibration(float frequency, float amplitude, OVRInput.Controller mask = OVRInput.Controller.Active)
+    {
+        OVRInput.SetControllerVibration(frequency, amplitude, mask);
+    }
 }

@@ -6,8 +6,46 @@ using UnityHelpers;
 public class CuffBoard : MonoBehaviour
 {
     public CuffController leftCuff, rightCuff;
+    [Tooltip("The length in seconds of the vibration that occurs during snapping")]
+    /// <summary>
+    /// The length in seconds of the vibration that occurs during snapping
+    /// </summary>
+    public float vibrationLength = 0.1f;
     private Quaternion startRotL, startRotR;
     private Vector3 axisL, normalL, axisR, normalR;
+
+    private Coroutine leftVibrator, rightVibrator;
+
+    void OnEnable()
+    {
+        leftCuff.onSnap.AddListener(OnSnap);
+        rightCuff.onSnap.AddListener(OnSnap);
+    }
+    void OnDisable()
+    {
+        leftCuff.onSnap.RemoveListener(OnSnap);
+        rightCuff.onSnap.RemoveListener(OnSnap);
+    }
+
+    private void OnSnap(CuffController caller)
+    {
+        if (caller == leftCuff)
+        {
+            if (leftVibrator != null)
+                StopCoroutine(leftVibrator);
+
+            OculusInputBridge.SetControllerVibration(1, 1, OVRInput.Controller.LTouch);
+            leftVibrator = StartCoroutine(CommonRoutines.WaitToDoAction((output) => { OculusInputBridge.SetControllerVibration(0, 0, OVRInput.Controller.LTouch); }, vibrationLength));
+        }
+        else if (caller == rightCuff)
+        {
+            if (rightVibrator != null)
+                StopCoroutine(rightVibrator);
+
+            OculusInputBridge.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
+            rightVibrator = StartCoroutine(CommonRoutines.WaitToDoAction((output) => { OculusInputBridge.SetControllerVibration(0, 0, OVRInput.Controller.RTouch); }, vibrationLength));
+        }
+    }
 
     void Update()
     {

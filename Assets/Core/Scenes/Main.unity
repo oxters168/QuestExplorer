@@ -1333,6 +1333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftCuff: {fileID: 1385022964}
   rightCuff: {fileID: 700235173}
+  vibrationLength: 0.1
 --- !u!4 &1949981467
 Transform:
   m_ObjectHideFlags: 0
@@ -1552,62 +1553,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1949981467}
     m_Modifications:
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.size
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[0]
-      value: A
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[1]
-      value: B
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[2]
-      value: C
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[3]
-      value: D
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[4]
-      value: E
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[5]
-      value: F
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[6]
-      value: G
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[7]
-      value: H
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[8]
-      value: I
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[9]
-      value: J
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[10]
-      value: K
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[11]
-      value: L
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385022964, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3, type: 3}
-      propertyPath: glyphs.Array.data[12]
-      value: M
-      objectReference: {fileID: 0}
     - target: {fileID: 7185414786931642568, guid: 97f9ae79e6fa2bfd5bf230d6555c35e3,
         type: 3}
       propertyPath: m_LocalPosition.x

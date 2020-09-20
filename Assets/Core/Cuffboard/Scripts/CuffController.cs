@@ -2,7 +2,9 @@
 using UnityHelpers;
 
 [System.Serializable]
-public class ClickEvent : UnityEngine.Events.UnityEvent<CuffController, int> {}
+public class ClickEvent : UnityEngine.Events.UnityEvent<CuffController, string, int> {}
+[System.Serializable]
+public class SnapEvent : UnityEngine.Events.UnityEvent<CuffController> {}
 
 public class CuffController : MonoBehaviour
 {
@@ -11,6 +13,11 @@ public class CuffController : MonoBehaviour
     /// The part of the object whose spin represents the input
     /// </summary>
     public Transform innerModule;
+    [Tooltip("The part of the object that covers the inner module")]
+    /// <summary>
+    /// The part of the object that covers the inner module
+    /// </summary>
+    public Transform coverModule;
     [Tooltip("The parent of all the UI")]
     /// <summary>
     /// The parent of all the UI
@@ -38,7 +45,12 @@ public class CuffController : MonoBehaviour
     /// </summary>
     public bool inverted = true;
 
-    [Space(10), Tooltip("The minimum angle in degrees the inner module can be on the z-axis")]
+    [Space(10), Tooltip("The percent distance from the spin value where it will snap to the value")]
+    /// <summary>
+    /// The percent distance from the spin value where it will snap to the value
+    /// </summary>
+    public float snapPercent = 0.1f;
+    [Tooltip("The minimum angle in degrees the inner module can be on the z-axis")]
     /// <summary>
     /// The minimum angle in degrees the inner module can be on the z-axis
     /// </summary>
@@ -48,6 +60,11 @@ public class CuffController : MonoBehaviour
     /// The maximum angle in degrees the inner module can be on the z-axis
     /// </summary>
     public float maxAngle = 90;
+    [Tooltip("The angle to offset on the x-axis after the spin angle is applied on the z-axis")]
+    /// <summary>
+    /// The angle to offset on the x-axis after the spin angle is applied on the z-axis
+    /// </summary>
+    public float horizontalOffsetAngle = 45;
     [Space(10), Tooltip("The time in seconds before click is considered a long press")]
     /// <summary>
     /// The time in seconds before click is considered a long press
@@ -78,10 +95,13 @@ public class CuffController : MonoBehaviour
     [Space(10)]
     public ClickEvent onClick;
     public ClickEvent onRelease;
+    public SnapEvent onSnap;
 
     private float lastClickTime = -1;
     private int spamCount = 0;
     private int clicksSent = 0;
+    private int prevIndex;
+    private bool snapEnd;
 
     void Update()
     {
@@ -122,15 +142,46 @@ public class CuffController : MonoBehaviour
     {
         spin = Mathf.Clamp(spin, -1, 1);
         var actualSpin = inverted ? -spin : spin;
+        #region Snap to value
+        if (snapPercent > 0 && shownGlyphs != null)
+        {
+            int glyphCount = shownGlyphs.Length;
+            float offsetAmount = 2f / (glyphCount - 1);
+            float percentDiff = snapPercent * offsetAmount;
+            float valueIndex = (actualSpin + 1) / offsetAmount;
+            int roundedIndex = Mathf.RoundToInt(valueIndex);
+            float decimalPortion = Mathf.Abs(valueIndex - roundedIndex);
+            if (decimalPortion <= percentDiff)
+            {
+                actualSpin = offsetAmount * roundedIndex + (-1);
 
-        innerModule.localRotation = Quaternion.AngleAxis((maxAngle - minAngle) * ((actualSpin + 1) / 2) + minAngle, Vector3.forward);
+                if (prevIndex != roundedIndex)
+                {
+                    //OculusInputBridge.SetControllerVibration(1, 1);
+                    onSnap?.Invoke(this);
+                    // snapEnd = false;
+                }
+                // else if (!snapEnd)
+                // {
+                //     //OculusInputBridge.SetControllerVibration(0, 0);
+                //     onEndSnap?.Invoke(this);
+                //     snapEnd = true;
+                // }
+                
+                prevIndex = roundedIndex;
+            }
+        }
+        #endregion
+
+        innerModule.localRotation = Quaternion.Euler(horizontalOffsetAngle, 0, (maxAngle - minAngle) * ((actualSpin + 1) / 2) + minAngle);
+        coverModule.localRotation = Quaternion.AngleAxis(horizontalOffsetAngle, Vector3.right);
 
         if (click && lastClickTime < 0)
         {
             //Fire onClick
             lastClickTime = Time.time;
             clicksSent = 1;
-            onClick?.Invoke(this, clicksSent);
+            onClick?.Invoke(this, shownGlyphs[prevIndex], clicksSent);
         }
         else if (click && Time.time - lastClickTime >= longPressTime)
         {
@@ -140,7 +191,7 @@ public class CuffController : MonoBehaviour
             {
                 spamCount = expectedSpam;
                 clicksSent++;
-                onClick?.Invoke(this, clicksSent);
+                onClick?.Invoke(this, shownGlyphs[prevIndex], clicksSent);
             }
         }
         else if (!click && lastClickTime >= 0)
@@ -148,7 +199,7 @@ public class CuffController : MonoBehaviour
             //Fire onUp
             lastClickTime = -1;
             spamCount = 0;
-            onRelease?.Invoke(this, clicksSent);
+            onRelease?.Invoke(this, shownGlyphs[prevIndex], clicksSent);
         }
     }
 }
