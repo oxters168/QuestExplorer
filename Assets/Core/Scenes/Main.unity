@@ -645,7 +645,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306418099}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.72, y: 0, z: 0}
+  m_LocalPosition: {x: -0.15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2055497336}
@@ -665,8 +665,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridItemPrefab: {fileID: 7780193336522915170, guid: 3297f449fd5384141a987ccfb692bbac,
     type: 3}
-  itemSize: 0.2
-  padding: 0.1
+  itemSize: 0.02
+  padding: 0.01
   gridSizeX: 1
   gridSizeY: 3
   itemsPosY: 0
