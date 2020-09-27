@@ -24,8 +24,15 @@ public class CuffBoard : MonoBehaviour
     private Quaternion startRotL, startRotR;
     private Vector3 axisL, normalL, axisR, normalR;
 
+    [Space(10), Tooltip("All the different glyphs this board supports")]
+    public BoardGlyphCollection glyphs;
+
     public bool inputFieldFocused { get; private set; }
+    #if (TextMeshPro)
     private TMPro.TMP_InputField inputField;
+    #else
+    private UnityEngine.UI.InputField inputField;
+    #endif
 
     private Coroutine leftVibrator, rightVibrator;
 
@@ -93,17 +100,53 @@ public class CuffBoard : MonoBehaviour
 
     private void GetCurrentInputField()
     {
+        #if (TextMeshPro)
         inputField = UnityEngine.EventSystems.EventSystem.current?.currentSelectedGameObject?.GetComponent<TMPro.TMP_InputField>();
+        #else
+        inputField = UnityEngine.EventSystems.EventSystem.current?.currentSelectedGameObject?.GetComponent<UnityEngine.UI.InputField>();
+        #endif
         inputFieldFocused = inputField != null && inputField.isFocused;
     }
     private void ApplyInputToCuffs()
     {
+        #region Set position
         leftCuff.transform.position = OculusInputBridge.ltouchPos;
         rightCuff.transform.position = OculusInputBridge.rtouchPos;
+        #endregion
 
+        #region Set clicking
         leftCuff.click = OculusInputBridge.triggerL;
         rightCuff.click = OculusInputBridge.triggerR;
+        #endregion
 
+        #region Setting cuff glyphs
+        string[] currentLeft;
+        string[] currentRight;
+        if (OculusInputBridge.y && OculusInputBridge.x)
+        {
+            currentLeft = glyphs.altUpperLeft;
+            currentRight = glyphs.altUpperRight;
+        }
+        else if (OculusInputBridge.x)
+        {
+            currentLeft = glyphs.altLeft;
+            currentRight = glyphs.altRight;
+        }
+        else if (OculusInputBridge.y)
+        {
+            currentLeft = glyphs.upperLeft;
+            currentRight = glyphs.upperRight;
+        }
+        else
+        {
+            currentLeft = glyphs.lowerLeft;
+            currentRight = glyphs.lowerRight;
+        }
+        leftCuff.glyphs = currentLeft;
+        rightCuff.glyphs = currentRight;
+        #endregion
+
+        #region Rotation of cuffs
         if (OculusInputBridge.gripL)
         {
             if (OculusInputBridge.gripLDown)
@@ -139,5 +182,6 @@ public class CuffBoard : MonoBehaviour
         {
             rightCuff.transform.rotation = OculusInputBridge.rtouchRot;
         }
+        #endregion
     }
 }

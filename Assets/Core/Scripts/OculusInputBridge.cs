@@ -22,6 +22,10 @@ public class OculusInputBridge : MonoBehaviour
     public static float triggerAxisR { get; private set; }
     public static bool a { get; private set; }
     public static bool b { get; private set; }
+    public static bool x { get; private set; }
+    public static bool y { get; private set; }
+    public static bool l3 { get; private set; }
+    public static bool r3 { get; private set; }
 
     public static bool joystickL_PH_Up { get { return _joystickL_PH_Up; } }
     public static bool joystickL_PH_Down { get { return _joystickL_PH_Down; } }
@@ -63,6 +67,14 @@ public class OculusInputBridge : MonoBehaviour
     public static bool aDown { get { return _aDown; } }
     public static bool bUp { get { return _bUp; } }
     public static bool bDown { get { return _bDown; } }
+    public static bool xUp { get { return _xUp; } }
+    public static bool xDown { get { return _xDown; } }
+    public static bool yUp { get { return _yUp; } }
+    public static bool yDown { get { return _yDown; } }
+    public static bool l3Up { get { return _l3Up; } }
+    public static bool l3Down { get { return _l3Down; } }
+    public static bool r3Up { get { return _r3Up; } }
+    public static bool r3Down { get { return _r3Down; } }
 
     private static bool _joystickL_PH; //positive horizontal
     private static bool _joystickL_PH_Up;
@@ -104,6 +116,14 @@ public class OculusInputBridge : MonoBehaviour
     private static bool _aDown;
     private static bool _bUp;
     private static bool _bDown;
+    private static bool _xUp;
+    private static bool _xDown;
+    private static bool _yUp;
+    private static bool _yDown;
+    private static bool _l3Up;
+    private static bool _l3Down;
+    private static bool _r3Up;
+    private static bool _r3Down;
 
     private static bool prevJoystickL_PH; //positive horizontal
     private static bool prevJoystickL_NH; //negative horizontal
@@ -115,6 +135,10 @@ public class OculusInputBridge : MonoBehaviour
     private static bool prevJoystickR_NV; //negative vertical
     private static bool prevB;
     private static bool prevA;
+    private static bool prevX;
+    private static bool prevY;
+    private static bool prevL3;
+    private static bool prevR3;
     private static bool prevGripL;
     private static bool prevGripR;
     private static bool prevTriggerL;
@@ -142,6 +166,10 @@ public class OculusInputBridge : MonoBehaviour
         triggerAxisR = OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger, OVRInput.Controller.All);
         b = OVRInput.Get(OVRInput.RawButton.B, OVRInput.Controller.All);
         a = OVRInput.Get(OVRInput.RawButton.A, OVRInput.Controller.All);
+        x = OVRInput.Get(OVRInput.RawButton.X, OVRInput.Controller.All);
+        y = OVRInput.Get(OVRInput.RawButton.Y, OVRInput.Controller.All);
+        l3 = OVRInput.Get(OVRInput.RawButton.LThumbstick, OVRInput.Controller.All);
+        r3 = OVRInput.Get(OVRInput.RawButton.RThumbstick, OVRInput.Controller.All);
 
         _joystickL_NH = joystickL.x <= -joystickThreshold;
         _joystickL_PH = joystickL.x >= joystickThreshold;
@@ -158,6 +186,10 @@ public class OculusInputBridge : MonoBehaviour
 
         SetUpAndDown(a, ref _aUp, ref _aDown, ref prevA);
         SetUpAndDown(b, ref _bUp, ref _bDown, ref prevB);
+        SetUpAndDown(x, ref _xUp, ref _xDown, ref prevX);
+        SetUpAndDown(y, ref _yUp, ref _yDown, ref prevY);
+        SetUpAndDown(l3, ref _l3Up, ref _l3Down, ref prevL3);
+        SetUpAndDown(r3, ref _r3Up, ref _r3Down, ref prevR3);
         SetUpAndDown(_joystickL_NH, ref _joystickL_NH_Up, ref _joystickL_NH_Down, ref prevJoystickL_NH);
         SetUpAndDown(_joystickL_PH, ref _joystickL_PH_Up, ref _joystickL_PH_Down, ref prevJoystickL_PH);
         SetUpAndDown(_joystickL_NV, ref _joystickL_NV_Up, ref _joystickL_NV_Down, ref prevJoystickL_NV);

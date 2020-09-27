@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0efd5be7ad156dfda5979ff7e18de2c, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: 
+  lowerLeft:
+  - q
+  - w
+  - e
+  - r
+  - t
+  - a
+  - s
+  - d
+  - f
+  - g
+  - z
+  - x
+  - c
+  lowerRight:
+  - y
+  - u
+  - i
+  - o
+  - p
+  - h
+  - j
+  - k
+  - l
+  - n
+  - m
+  - v
+  - b
+  upperLeft:
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - A
+  - S
+  - D
+  - F
+  - G
+  - Z
+  - X
+  - C
+  upperRight:
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - H
+  - J
+  - K
+  - L
+  - N
+  - M
+  - V
+  - B
+  altLeft:
+  - ','
+  - .
+  - '['
+  - ']'
+  - '`'
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  altRight:
+  - 6
+  - 7
+  - 8
+  - 9
+  - 0
+  - '-'
+  - =
+  - ;
+  - ''''
+  - /
+  - \
+  altUpperLeft:
+  - <
+  - '>'
+  - '{'
+  - '}'
+  - ~
+  - '!'
+  - '@'
+  - '#'
+  - $
+  - '%'
+  altUpperRight:
+  - ^
+  - '&'
+  - '*'
+  - (
+  - )
+  - _
+  - +
+  - ':'
+  - '"'
+  - '?'
+  - '|'
